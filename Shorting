@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    FILE *fp1, *fp2;
+    char ch;
+
+    // Open original file in read mode
+    fp1 = fopen("input.txt", "r");
+    if (fp1 == NULL) {
+        printf("Cannot open input file.\n");
+        return 1;
+    }
+
+    // Open temp file to write non-digit characters
+    fp2 = fopen("temp.txt", "w");
+    if (fp2 == NULL) {
+        printf("Cannot open temp file.\n");
+        fclose(fp1);
+        return 1;
+    }
+
+    // Read file character by character
+    while ((ch = fgetc(fp1)) != EOF) {
+        // Write only NON-digit characters
+        if (!isdigit(ch)) {
+            fputc(ch, fp2);
+        }
+    }
+
+    fclose(fp1);
+    fclose(fp2);
+
+    // Replace original file with temp file
+    remove("input.txt");
+    rename("temp.txt", "input.txt");
+
+    printf("All digits have been deleted from the file.\n");
+
+    return 0;
+}
