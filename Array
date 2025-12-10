@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, minIndex;
+    char str[50][50], temp[50];
+
+    printf("Enter number of strings: ");
+    scanf("%d", &n);
+
+    printf("Enter %d strings:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", str[i]);
+    }
+
+    // Selection Sort for strings
+    for (int i = 0; i < n - 1; i++) {
+        minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (strcmp(str[j], str[minIndex]) < 0) {
+                minIndex = j;
+            }
+        }
+
+        // Swap if needed
+        if (minIndex != i) {
+            strcpy(temp, str[i]);
+            strcpy(str[i], str[minIndex]);
+            strcpy(str[minIndex], temp);
+        }
+    }
+
+    printf("\nStrings in sorted order:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%s\n", str[i]);
+    }
+
+    return 0;
+}
